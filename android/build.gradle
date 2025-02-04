@@ -37,7 +37,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.facebook.react:react-native:0.76.1'  // From node_modules
+    implementation 'com.facebook.react:react-native:+'  // From node_modules
 }
 
 def configureReactNativePom(def pom) {
@@ -67,14 +67,12 @@ def configureReactNativePom(def pom) {
         }
     }
 }
-configurations {
-  customConfig.extendsFrom implementation
-}
+
 afterEvaluate { project ->
     task androidJavadoc(type: Javadoc) {
         source = android.sourceSets.main.java.srcDirs
         classpath += files(android.bootClasspath)
-        classpath += files(project.getConfigurations().getByName('customConfig').asList())
+        classpath += files(project.getConfigurations().getByName('implementation').asList())
         include '**/*.java'
     }
 
